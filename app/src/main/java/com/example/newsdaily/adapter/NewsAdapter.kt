@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.OnReceiveContentListener
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -49,19 +51,31 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
             tvTitle.text = article.title
             tvDescription.text = article.description
             tvPublishedAt.text = article.publishedAt
-            setOntemClickListener {
-                onItemClickListener?.let {
-                    it(article)
-                }
+            setOnClickListener{
+                onItemClickListener?.let { it(article) }
+
             }
         }
     }
 
+//    class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+//        val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
+//        val ivArticleImage:ImageView = itemView.findViewById(R.id.ivArticleImage)
+//        val tvSource: TextView = itemView.findViewById(R.id.tvSource)
+//        val tvPublishedAt: TextView = itemView.findViewById(R.id.tvPublishedAt)
+//        val tvDescription: TextView = itemView.findViewById(R.id.tvDescription)
+//
+//    }
+
     private var onItemClickListener: ((Article) -> Unit)? = null
 
-    fun setOntemClickListener(listener: (Article) -> Unit){
+
+    fun setOnItemClickListener(listener: (Article) -> Unit) {
         onItemClickListener = listener
     }
 
+//    interface NewsClicked{
+//        fun shareClick(imageView: ImageView,item : Article)
+//    }
 
 }

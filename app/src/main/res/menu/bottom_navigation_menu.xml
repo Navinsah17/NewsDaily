@@ -12,7 +12,7 @@
     </item>
 
     <item android:id="@+id/searchNewsFragment2"
-        android:title="Breaking News"
+        android:title="Search News"
         android:icon="@drawable/ic_baseline_search_24">
     </item>
 

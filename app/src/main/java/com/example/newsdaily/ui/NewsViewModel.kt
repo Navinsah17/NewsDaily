@@ -4,6 +4,7 @@ import android.app.DownloadManager.Query
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.newsdaily.models.Article
 import com.example.newsdaily.models.NewsResponse
 import com.example.newsdaily.repository.NewsRepository
 import com.example.newsdaily.util.Resource
@@ -53,5 +54,14 @@ class NewsViewModel(
             }
         }
         return Resource.Error(response.message())
+    }
+    fun savedArticle(article: Article) = viewModelScope.launch {
+        newsRepository.upsert(article)
+    }
+
+    fun getSavedArticle() = newsRepository.getSavedNews()
+
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        newsRepository.deleteArticle(article)
     }
 }

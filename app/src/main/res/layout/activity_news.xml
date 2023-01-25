@@ -14,6 +14,7 @@
         app:layout_constraintBottom_toTopOf="@+id/navigationv"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.fragment.app.FragmentContainerView
