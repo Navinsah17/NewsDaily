@@ -1,12 +1,12 @@
 package com.example.newsdaily.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.OnReceiveContentListener
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -16,8 +16,8 @@ import com.example.newsdaily.models.Article
 import kotlinx.android.synthetic.main.item_article_preview.view.*
 
 class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
-
-    inner class ArticleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    private val items:ArrayList<Article> = ArrayList()
+    //inner class ArticleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
     private val differCallback = object : DiffUtil.ItemCallback<Article>(){
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -30,13 +30,19 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     }
     val differ = AsyncListDiffer(this,differCallback)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        return ArticleViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_article_preview,
-                parent,false
-            )
-        )
+    class ArticleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder{
+        //val inflater = LayoutInflater.from(parent.context)
+        val view = LayoutInflater.from(parent.context).inflate(
+            R.layout.item_article_preview,
+            parent,false)
+//        val viewHolder=NewsViewHolder(view)
+//
+//        view.findViewById<ImageButton>(R.id.imageButton).setOnClickListener{
+//            listener.shareClick(view.findViewById<ImageView>(R.id.ivArticleImage),items[viewHolder.adapterPosition])
+//        }
+        return ArticleViewHolder(view)
+
     }
 
     override fun getItemCount(): Int {
@@ -56,7 +62,14 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
             }
         }
+        holder.itemView.imageButton.setOnClickListener{
+                onShareNewsClick?.let {
+                    it(article)
+                }
+
+        }
     }
+
 
 //    class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 //        val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
@@ -68,10 +81,14 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 //    }
 
     private var onItemClickListener: ((Article) -> Unit)? = null
+    private var onShareNewsClick: ((Article) -> Unit)? = null
 
 
     fun setOnItemClickListener(listener: (Article) -> Unit) {
         onItemClickListener = listener
+    }
+    fun setOnShareNewsClick(listener: (Article) -> Unit) {
+        onShareNewsClick = listener
     }
 
 //    interface NewsClicked{
